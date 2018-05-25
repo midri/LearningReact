@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
     fontSize: 30,
-  },
+  }, 
   submit: {
     color: 'red',
   },
