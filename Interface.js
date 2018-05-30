@@ -1,17 +1,37 @@
 import React, { Component } from 'react'
 import {Picker} from 'react-native'
 import { ImageBackground } from 'react-native'
+import { Field, reduxForm } from "redux-form"
 import ReactFontFace from 'react-font-face'
-import t from 'tcomb-form-native';
+import { ScrollView, View, Platform } from "react-native";
+import {
+  Body, 
+  Container, 
+  Content, 
+  Header, 
+  Left,
+  Button, 
+  Icon,
+  H2, 
+  Item, 
+  Input, 
+  Label, 
+  CheckBox } from "native-base";
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
+  TextInput,
   Image
 } from 'react-native'
 
-
+ const InputField =function(props){
+  //these are used in the form below to validate the input in a synchronous manner
+  const {
+     input, label, type, meta: {touched, error, warning}
+  }= props;
+ }
+   
 class Register extends Component{
   constructor(props){
     super(props);
@@ -27,12 +47,15 @@ class Register extends Component{
     } //close state 
   }//close constructor
 
-renderCheckbox({
+
+
+    
+ renderCheckbox({
     input, label, type, meta: { touched, error, warning }
   }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <Item rounded style={styles.inputGrp}>
           <CheckBox
             ref={c => (this.checkBox = c)}
             color={commonColors.brandPrimary}
@@ -60,7 +83,7 @@ renderCheckbox({
   }
   //load credit card type
   loadCCTypes(){
-    return this.CC_types.map(
+    return this.state.CC_types.map(
       CCtype => (
        <Picker.Item label={CCtype.CardName} value={CCtype.CardType} />
       )
@@ -69,39 +92,39 @@ renderCheckbox({
   
   //Set the selected Payment type and return what to render
   setPaymentState(){
-    if(SelectedCard === 'SEPA'){
+    if(this.state.SelectedCard === 'SEPA'){
       this.state.isAddingSEPA = true;
       return(
-        <View>
+        <div>
          <Field
                   name="iban"
-                  //component={InputField}
+                  component={InputField}
                   type="text"
-                  //label here
-                  validate={[required]}
+                  label={<Text>IBAN</Text>}
+                  //validate={[required]}
                 />
 
                 <Field
                   name="bankholder"
-                  //component={InputField}
+                  component={InputField}
                   type="text"
-                  //label={trans("customer.profile.payment_method_add_sepa.account_holder")}
-                  validate={[required]}
+                  label={<Text>Bank holder name</Text>}
+                  //validate={[required]}
                 />
 
                 <Field
                   name="agb_accepted"
-                  //component={this.renderCheckbox}
+                  component={this.renderCheckbox}
                   type="checkbox"
                   //validate={[checkedRequired]}
-                  label={<Text>{trans("customer.profile.payment_method_add_sepa.agb_accepted")}</Text>}
+                  label={<Text>("agb_accepted")</Text>}
                 />
 
                 <Button
                   primary
                   block
                   large
-                  //style={styles.primaryBtn}
+                  style={styles.primaryBtn}
                   type="submit"
                   disabled={this.props.invalid || this.state.isAddingSEPA}
                   //onPress={() => this.props.addSEPA(this.state.formRef ? this.state.formRef.values : {}, navigation, this.state.firstname, this.state.lastname)}
@@ -116,19 +139,19 @@ renderCheckbox({
                     save
                   </Text>
                 </Button>
-        </View>
+        </div>
       )
     }
-    else if(SelectedCard === 'CreditCard'){
-      this.state.isAddingCCard= true;
+    else if(this.state.SelectedCard === 'CreditCard'){
+      this.state.isAddingCCard = true;
       return(
-        <View>
+        <div>
           <Field
                   name="Card Numbers"
-                  //component={InputField}
+                  component={InputField}
                   type="text"
-                  //label={trans("customer.profile.payment_method_add_sepa.iban")}
-                  validate={[required]}
+                  label={<Text>Card Number</Text>}
+                  //validate={[required]}
                   maxLength = {12}
                 />
                 <Picker
@@ -141,17 +164,17 @@ renderCheckbox({
                 </Picker>
                 <Field
                   name="Card holder"
-                  //component={InputField}
+                  component={InputField}
                   type="text"
-                  //label={trans("customer.profile.payment_method_add_sepa.account_holder")}
-                  validate={[required]}
+                  label={<Text>Bank holder name</Text>}
+                  //validate={[required]}
                 />
                 <Field
                   name="CCV"
-                  //component={InputField}
+                  component={InputField}
                   type="text"
-                  //label={trans("customer.profile.payment_method_add_sepa.account_holder")}
-                  validate={[required]}
+                  label={<Text>CVV</Text>}
+                  //validate={[required]}
                   maxLength = {3}
                 />
 
@@ -159,7 +182,7 @@ renderCheckbox({
                   name="agb_accepted"
                   component={this.renderCheckbox}
                   type="checkbox"
-                  validate={[checkedRequired]}
+                  //validate={[checkedRequired]}
                   label={<Text>"I hereby Accept the terms and agree to perform necessary payments"</Text>}
                 />
 
@@ -182,27 +205,34 @@ renderCheckbox({
                     save
                   </Text>
                 </Button>
-        </View>
+        </div>
       )
     }
-    else if(SelectedCard === 'Paypal'){
+    else if(this.state.SelectedCard === 'Paypal'){
       this.state.isAddingPAYPAL = true;
       return(
-      <View>
+      <div>
            <Field
-                  name="CCV"
-                  //component={InputField}
+                  name="email"
+                  component={InputField}
                   type="text"
-                  //label={trans("customer.profile.payment_method_add_sepa.account_holder")}
-                  validate={[required]}
+                  label={<Text>Email</Text>}
+                  //validate={[required]}
                   maxLength = {3}
                 />
-
+           <Field
+                  name="password"
+                  component={InputField}
+                  type="text"
+                  label={<Text>Email</Text>}
+                  //validate={[required]}
+                  maxLength = {3}
+                />
                 <Field
                   name="agb_accepted"
                   component={this.renderCheckbox}
                   type="checkbox"
-                  validate={[checkedRequired]}
+                  //validate={[checkedRequired]}
                   label={<Text>"I hereby Accept the terms and agree to perform necessary payments"</Text>}
                 />
 
@@ -225,29 +255,33 @@ renderCheckbox({
                     Save
                   </Text>
                 </Button>
-          </View>
-      )
-    }
+          </div>
+          )
+         }
     else{
-      //Do nothing
+      return(<Text>Nothing to Render</Text>)
     }
   }
   render(){
     const resizeMode = 'cover';
     return (
-    <View>
-      <Picker
-        selectedValue={this.state.SelectedCard}
-        onValueChange={(itemValue, itemIndex) => 
-            this.setState({SelectedCard: itemValue})}>
-
-        // Dynamically loads Picker.Values from this.state.userTypes.
-        {this.loadPaymentMethods()}
-      </Picker>
-      <div>
-        
-     </div>
-
+    <View style={{ 
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+        <Picker
+          selectedValue={this.state.SelectedCard}
+          onValueChange={(itemValue, itemIndex) => 
+              this.setState({SelectedCard: itemValue})}>
+            {this.loadPaymentMethods()}
+          // Dynamically loads Picker.Values from this.state.userTypes
+        </Picker>
+        <div>
+          DEBUG: {this.state.SelectedCard} 
+         {this.setPaymentState()}
+        </div>
   </View>
       )
   }
