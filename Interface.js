@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import {Picker} from 'react-native'
-import { ImageBackground } from 'react-native'
-import { Field, reduxForm } from "redux-form"
-import ReactFontFace from 'react-font-face'
+import React, { Component } from 'react';
+import {Picker} from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { ImageBackground } from 'react-native';
+import { Field, reduxForm } from "redux-form";
+import ReactFontFace from 'react-font-face';
 import { ScrollView, View, Platform } from "react-native";
 import {
   Body, 
@@ -51,6 +52,7 @@ class Register extends Component{
 
     
  renderCheckbox({
+   //input here is seen as undefined
     input, label, type, meta: { touched, error, warning }
   }) {
     return (
@@ -94,170 +96,103 @@ class Register extends Component{
   setPaymentState(){
     if(this.state.SelectedCard === 'SEPA'){
       this.state.isAddingSEPA = true;
-      return(
-        <div>
-         <Field
-                  name="iban"
-                  component={InputField}
-                  type="text"
-                  label={<Text>IBAN</Text>}
-                  //validate={[required]}
-                />
-
-                <Field
-                  name="bankholder"
-                  component={InputField}
-                  type="text"
-                  label={<Text>Bank holder name</Text>}
-                  //validate={[required]}
-                />
-
-                <Field
-                  name="agb_accepted"
-                  component={this.renderCheckbox}
-                  type="checkbox"
-                  //validate={[checkedRequired]}
-                  label={<Text>("agb_accepted")</Text>}
-                />
-
-                <Button
-                  primary
-                  block
-                  large
-                  style={styles.primaryBtn}
-                  type="submit"
-                  disabled={this.props.invalid || this.state.isAddingSEPA}
-                  //onPress={() => this.props.addSEPA(this.state.formRef ? this.state.formRef.values : {}, navigation, this.state.firstname, this.state.lastname)}
-                >
-                  <Text
-                    style={
-                      Platform.OS === "android"
-                        ? { fontSize: 16, textAlign: "center" }
-                        : { fontSize: 16, fontWeight: "900" }
-                    }
-                  >
-                    save
-                  </Text>
-                </Button>
-        </div>
-      )
-    }
+      return(<View style={styles.container}>
+              <form>
+                <label> IBAN
+                  <input name="iban"
+                    component={InputField}
+                    type="text"
+                    //label={<Text>IBAN</Text>}
+                    >
+                  </input>
+                </label>
+                <label> Bank Holder
+                  <input name="bankholder"
+                    component={InputField}
+                    type="text"
+                    //label={<Text>Bank</Text>}
+                    >
+                  </input>
+                </label>
+  
+                <button>
+                  SAVE
+                </button>
+              </form>
+              <Text>SEPA CHOSEN</Text>
+            </View>)
+    } 
     else if(this.state.SelectedCard === 'CreditCard'){
       this.state.isAddingCCard = true;
-      return(
-        <div>
-          <Field
-                  name="Card Numbers"
-                  component={InputField}
-                  type="text"
-                  label={<Text>Card Number</Text>}
-                  //validate={[required]}
-                  maxLength = {12}
-                />
+        return(<View style={styles.container}>
+              <form>
+                <label> CARD NUMBER
+                  <input name="ccnumber"
+                    component={InputField}
+                    type="text"
+                    //label={<Text>IBAN</Text>}
+                    >
+                  </input>
+                </label>
+                <label> Bank Holder
+                  <input name="bankholder"
+                    component={InputField}
+                    type="text"
+                    //label={<Text>Bank</Text>}
+                    >
+                  </input>
+                </label>
+                <label> CVV Digits
+                  <input name="cvv"
+                    component={InputField}
+                    type="text"
+                    maxLength={3} 
+                    //label={<Text>Bank</Text>}
+                    >
+                  </input>
+                </label>
                 <Picker
                   selectedValue={this.state.Selected_CC_Type}
                   onValueChange={(itemValue, itemIndex) => 
-                  this.setState({Selected_CC_Type: itemValue})}>
-
-                  // Dynamically loads Picker.Values from this.state.CCtypes.
-                  {this.loadCCTypes()}
+                      this.setState({Selected_CC_Type: itemValue})}>
+                    {this.loadCCTypes()}
+                  // Dynamically loads Picker.Values from this.state.userTypes
                 </Picker>
-                <Field
-                  name="Card holder"
-                  component={InputField}
-                  type="text"
-                  label={<Text>Bank holder name</Text>}
-                  //validate={[required]}
-                />
-                <Field
-                  name="CCV"
-                  component={InputField}
-                  type="text"
-                  label={<Text>CVV</Text>}
-                  //validate={[required]}
-                  maxLength = {3}
-                />
-
-                <Field
-                  name="agb_accepted"
-                  component={this.renderCheckbox}
-                  type="checkbox"
-                  //validate={[checkedRequired]}
-                  label={<Text>"I hereby Accept the terms and agree to perform necessary payments"</Text>}
-                />
-
-                <Button
-                  primary
-                  block
-                  large
-                  style={styles.primaryBtn}
-                  type="submit"
-                  disabled={this.props.invalid || this.state.isAddingSEPA}
-                  //onPress={() => this.props.addSEPA(this.state.formRef ? this.state.formRef.values : {}, navigation, this.state.firstname, this.state.lastname)}
-                >
-                  <Text
-                    style={
-                      Platform.OS === "android"
-                        ? { fontSize: 16, textAlign: "center" }
-                        : { fontSize: 16, fontWeight: "900" }
-                    }
-                  >
-                    save
-                  </Text>
-                </Button>
-        </div>
-      )
+  
+                <button>
+                  SAVE
+                </button>
+              </form>
+              <Text>Credit Card CHOSEN</Text>
+            </View>)
     }
     else if(this.state.SelectedCard === 'Paypal'){
       this.state.isAddingPAYPAL = true;
-      return(
-      <div>
-           <Field
-                  name="email"
-                  component={InputField}
-                  type="text"
-                  label={<Text>Email</Text>}
-                  //validate={[required]}
-                  maxLength = {3}
-                />
-           <Field
-                  name="password"
-                  component={InputField}
-                  type="text"
-                  label={<Text>Email</Text>}
-                  //validate={[required]}
-                  maxLength = {3}
-                />
-                <Field
-                  name="agb_accepted"
-                  component={this.renderCheckbox}
-                  type="checkbox"
-                  //validate={[checkedRequired]}
-                  label={<Text>"I hereby Accept the terms and agree to perform necessary payments"</Text>}
-                />
-
-                <Button
-                  primary
-                  block
-                  large
-                  style={styles.primaryBtn}
-                  type="submit"
-                  disabled={this.props.invalid || this.state.isAddingSEPA}
-                  //onPress={() => this.props.addSEPA(this.state.formRef ? this.state.formRef.values : {}, navigation, this.state.firstname, this.state.lastname)}
-                >
-                  <Text
-                    style={
-                      Platform.OS === "android"
-                        ? { fontSize: 16, textAlign: "center" }
-                        : { fontSize: 16, fontWeight: "900" }
-                    }
-                  >
-                    Save
-                  </Text>
-                </Button>
-          </div>
-          )
-         }
+      return(<View style={styles.container}>
+              <form>
+                <label> EMAIL
+                  <input name="EMAIL"
+                    component={InputField}
+                    type="text"
+                    //label={<Text>IBAN</Text>}
+                    >
+                  </input>
+                </label>
+                <label> Password
+                  <input name="PaypalPassword"
+                    component={InputField}
+                    type="password"
+                    //label={<Text>Bank</Text>}
+                    >
+                  </input>
+                </label>
+                <button>
+                  SAVE
+                </button>
+            </form>
+              <Text>PAYPAL CHOSEN</Text>
+            </View>)
+    }
     else{
       return(<Text>Nothing to Render</Text>)
     }
@@ -292,6 +227,15 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
     fontSize: 30,
+  },
+  container: {
+      padding: 10,
+      marginTop: 3,
+      alignItems: 'center',
+   },
+  buttonStyle: {
+    color: 'grey',
+    
   },
   submit: {
     color: 'red',
