@@ -116,7 +116,7 @@ class Register extends Component{
                 </label>
   
                 <button>
-                  SAVE
+                  <Text  style={styles.submit}> SAVE </Text>
                 </button>
               </form>
               <Text>SEPA CHOSEN</Text>
@@ -160,7 +160,7 @@ class Register extends Component{
                 </Picker>
   
                 <button>
-                  SAVE
+                  <Text  style={styles.submit}> SAVE </Text>
                 </button>
               </form>
               <Text>Credit Card CHOSEN</Text>
@@ -187,7 +187,7 @@ class Register extends Component{
                   </input>
                 </label>
                 <button>
-                  SAVE
+                  <Text  style={styles.submit}> SAVE </Text>
                 </button>
             </form>
               <Text>PAYPAL CHOSEN</Text>
@@ -233,12 +233,13 @@ const styles = StyleSheet.create({
       marginTop: 3,
       alignItems: 'center',
    },
-  buttonStyle: {
-    color: 'grey',
-    
-  },
+  
   submit: {
-    color: 'red',
+    textAlign: 'center',
+    paddingLeft: 60,
+    paddingRight: 60,
+    fontSize: 18,
+    
   },
 });
 AppRegistry.registerComponent('App', () => Register)
