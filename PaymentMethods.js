@@ -25,7 +25,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Image
+  Image,
+
 } from 'react-native'
 
  const InputField =function(props){
@@ -41,25 +42,28 @@ class Register extends Component{
     //no need for state
     this.state={
     SelectedCard: '',
-     PMethods: [
-       {Type: 'SEPA',
-       detail: 'AB12CD34EF56GH78'},
-       {Type: 'CreditCard',
-       detail: '5847965856324521'},
-       {Type: 'paypal',
-       detail: 'test@TEST.com'},
+     PMethods:[
+       {Type: 'SEPA', detail: 'AB12CD34EF56GH78'},
+       {Type: 'CreditCard',detail: '5847965856324521'},
+       {Type: 'Paypal',detail: 'test@TEST.com'},
      ],
      isAddingSEPA:false,
      isAddingPAYPAL: false,
-     isAddingCCard: false
+     isAddingCCard: false,
     } //close state 
   }//close constructor
 
-
-
-  
+ OnPressDo(data){
+   this.setState({SelectedCard : data})
+   return
+   (
+     <View>
+       {this.setPaymentState()}
+     </View>
+   )
+ }
   //Set the selected Payment type and return what to render
-  setPaymentState(){
+  setPaymentState(value){
     if(this.state.SelectedCard === 'SEPA'){
       this.state.isAddingSEPA = true;
       return(<View style={styles.container}>
@@ -165,17 +169,20 @@ class Register extends Component{
   }
   
    MyPaymentMethods(){
-    {this.state.PMethods.map(Payment => (
-       <listItem 
-         onPress={() => this.setState({SelectedCard : Payment.Type})}>
-         <Text>{Payment.Type}</Text> 
-         <Text>{Payment.detail}</Text>
-         {this.setPaymentState()}
-       </listItem>   
-            )
+     return this.state.PMethods.map((Payment) => {
+       return(
+       <button 
+         onPress={() => onPressDo(Payment.Type)}>
+           <Text>{Payment.Type} {"\n"}</Text>
+           <Text>{Payment.detail} {"\n"}</Text>
+          
+       </button>   
+        
       )
-    }
-   }
+     }// close arrow
+    )//Close Payment
+   }//close function
+
 
   
   render(){
@@ -184,6 +191,7 @@ class Register extends Component{
       <View>
         <list>
             {this.MyPaymentMethods()}
+            
         </list>
       </View>
     )
