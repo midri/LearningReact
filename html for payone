@@ -1,0 +1,42 @@
+<! DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta http-equiv="Content-Type" content="text/html; charset =utf-8"/>
+        <meta charset ="UTF-8">
+        <title>Client API with the new hosted iFrames</title>
+    </head>
+    <body>
+        <h1>
+            Payone client api with new hosted iFrame
+        </h1>
+        <form name="paymentform" action ="#" method = "post">
+            
+            <fieldset> 
+            <input type ="hidden" name="pseudocardpan" id="pseudocardpan"> 
+            <input type ="hidden" name="truncatedcardpan" id="truncatedcardpan"> 
+            <input type ="hidden" name="cardtypeResponse" id="cardtypeResponse"> 
+            <input type ="hidden" name="cardexpiredateResponse" id="cardexpiredateResponse"> 
+            
+            <label for="cardtype"> Cart Type:</label>
+            <span class ="inputIframe" id ="expireInput">
+                <span id ="cardexpiremonth"></span>
+                <span id ="cardexpireyear"></span>
+            </span>
+            
+            <label for="firstname">Firstname:</label>
+            <input id="firstname" type ="text" name= "firstname" value ="" placeholder ="Firstname">
+            
+            <label for="lastname">Lastname:</label>
+            <input id="" type ="text" name= "lastname" value ="" placeholder ="Lastname">
+            
+            <div id ="error"></div>
+            <br/>
+            <input id="submit" type ="button" value="Run credit Card Check">
+            </fieldset>
+        </form>
+        <h2> The JSON received from the server</h2>
+        <div id="jsonResponse"><pre if="jsonResponsePre">Nothing received yet.</pre></div>
+        <h2> Autodetection callback result </h2>
+        <div id="autodetectionResponse"><pre id="autodetectionResponsePre">Nothing Received Yet.</pre></div>
+    </body>
+</html>
