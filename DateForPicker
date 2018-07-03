@@ -1,0 +1,21 @@
+//JavaScript-C24.2.0 (SpiderMonkey)
+var x = new Date();
+var day = x.getDay();
+print(x)
+print("Day is:", day)
+x = x.toString()
+my_date= x.split(" ");
+
+print(my_date[0])
+print(my_date[1])
+print(my_date[2])
+
+
+date = my_date[2];
+var month = my_date[1];
+
+var i = 0
+for(i; i<7; i++){
+    if
+
+}
