@@ -1,0 +1,137 @@
+import React, { Component } from 'react'
+import { ImageBackground, Picker } from 'react-native'
+import ReactFontFace from 'react-font-face'
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Image
+} from 'react-native'
+
+class Register extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      language:'',
+    }
+    //no need for state
+  }
+  WhichDay(date){
+    switch (date){
+      case 0:
+        day = "Sunday";
+        break;
+    case 1:
+        day = "Monday";
+        break;
+    case 2:
+        day = "Tuesday";
+        break;
+    case 3:
+        day = "Wednesday";
+        break;
+    case 4:
+        day = "Thursday";
+        break;
+    case 5:
+        day = "Friday";
+        break;
+    case 6:
+        day = "Saturday";
+    }
+    return day;
+  }
+  
+  WhichMonth(Month){
+    switch (Month)
+       { 
+         case 1: 
+           return 'January';
+           break;
+         case 2: 
+           return 'February';
+           break;
+        case 3: 
+           return 'March';
+           break;
+        case 4: 
+           return 'April';
+           break;
+        case 5: 
+           return 'Mai' ;
+           break;
+        case 6: 
+           return 'June';
+           break;
+        case 7: 
+           return 'July';
+           break;
+         case 10:
+           return 'August';
+           break;
+        case 9: 
+           return 'September';
+           break;
+        case 10: 
+           return 'October';
+           break;
+         case 11:
+           return 'November'
+           break;
+         case 12:
+           return 'December'
+           break;
+        default:
+             return 'Error'
+              }
+  }
+  
+  loadDate(){
+    var date= new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    
+    var month= this.WhichMonth(month);
+    var day = month+' '+date+', '+ year;
+    
+   //ar today =day.getDay();
+    
+   //his.WhichDay(today)
+// Sunday - Saturday : 0 - 6sf
+    return(
+      <Text>{{day.toString()}}</Text>
+    )
+// expected output: 2
+
+  }
+  render(){
+    const resizeMode = 'cover';
+    return (
+      <View>
+        <Picker
+          selectedValue={this.state.language}
+          style={{ height: 50, width: 150 }}
+          onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+          <Picker.Item label="12:00-14:00" value="first" />
+          <Picker.Item label="18:00-20:00" value="second" />
+        </Picker>
+        <View> 
+          {this.loadDate()} 
+        </View>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  title: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  submit: {
+    color: 'red',
+  },
+});
+AppRegistry.registerComponent('App', () => Register)
