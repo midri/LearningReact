@@ -150,7 +150,7 @@ TodayDate(){
   var month = x.getMonth();
   x = x.toString();
   var my_date= x.split(" ");
-  var str = day.toString()+'-'+my_date[2].toString()+'-'+month.toString()+'-'+my_date[3].toString();
+  var str = day.toString()+'-'+my_date[2].toString()+'-'+(month+1).toString()+'-'+my_date[3].toString();
 
   return(str);
 }
