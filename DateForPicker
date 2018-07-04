@@ -1,3 +1,42 @@
+function LinkedList() {
+  this.head = null;
+  this.tail = null;
+}
+function Node(value, next, prev) {
+  this.value = value;
+  this.next = next;
+  this.prev = prev;
+}
+
+function  WhichDay(day){
+    switch (Number(day)){
+      case 0:
+        day = "Sunday";
+        break;
+    case 1:
+        day = "Monday";
+        break;
+    case 2:
+        day = "Tuesday";
+        break;
+    case 3:
+        day = "Wednesday";
+        break;
+    case 4:
+        day = "Thursday";
+        break;
+    case 5:
+        day = "Friday";
+        break;
+    case 6:
+        day = "Saturday";
+        break;
+    default:
+        day = "NONE";
+   }
+    return day;
+  }
+
 function MinDate(date){
     var d = date.split("-");
     var new_date;
@@ -36,10 +75,12 @@ function MinDate(date){
 function MaxDate(date){
     var i = 0;
     var new_date;
+    var D_Name;
     date = date.split("-");
     var d = Number(date[0]);
     var m = Number(date[1]);
     var y = Number(date[2]);
+    var Dates=[]
     
     for (i; i < 7; i++){
         
@@ -74,8 +115,8 @@ function MaxDate(date){
                     d += 1;
                       
             }
-       new_date= d.toString()+'-'+ m.toString() +'-'+ y.toString();  
-    
+       new_date= d.toString()+'-'+ m.toString() +'-'+ y.toString(); 
+       
     }
     
     return(new_date);
@@ -87,11 +128,13 @@ function TodayDate(){
   var month = x.getMonth();
     x = x.toString();
     var my_date= x.split(" ");
-    var str = day.toString()+'-'+month.toString()+'-'+my_date[3].toString();
+    var str = my_date[2].toString()+'-'+month.toString()+'-'+my_date[3].toString();
 
   return(str);
 }
 
-print('25-2-2018');
-print(MinDate('25-2-2018'));
-print(MaxDate('25-2-2018'));
+
+print(TodayDate());
+print(MinDate(TodayDate()));
+print(MaxDate(TodayDate()));
+
